@@ -2,8 +2,9 @@ from telethon import TelegramClient
 from datetime import timezone, timedelta, datetime
 from time import sleep
 from api import *
-import ktrain
 import asyncio
+import xgboost
+import pickle
 
 # define functions to get and send messages
 async def get_messages():
@@ -50,7 +51,8 @@ async def find_combats(messages):
     count = 0
     total = len(messages)
     for message in messages:
-        if classifier.predict(message.text) == 'annotation':
+        vectorized = xgboost.DMatrix(vectorizer.transform([message.text]))
+        if classifier.predict(vectorized) >= 0.5:
             print('Combat found')
             combats.append(message)
             await post_message(message.text)
@@ -73,25 +75,24 @@ async def main():
 
         print(f'Running at {current_time}')  
 
-        try:
-            messages = await get_messages()
-            num_messages = len(messages)
-            print(f"{num_messages} messages downloaded")
-        
-        
-            if num_messages > 0:
-                try:
-                    print('Classifying messages...')
-                    combats = await find_combats(messages)
-                    print('Messages classified')
-                    num_combats = len(combats)
-                    print(f"{num_combats} found")
 
-                except:
-                    errors.append('Failed to classify messages')
+        messages = await get_messages()
+        num_messages = len(messages)
+        print(f"{num_messages} messages downloaded")
+    
+    
+        if num_messages > 0:
+            print('Classifying messages...')
+            combats = await find_combats(messages)
+            print('Messages classified')
+            num_combats = len(combats)
+            print(f"{num_combats} found")
 
-        except:
-            errors.append('Failed to get messages')
+            """ except:
+                errors.append('Failed to classify messages') """
+
+        """ except:
+            errors.append('Failed to get messages') """
 
         if len(errors) == 0:
             errors.append('None')
@@ -114,6 +115,10 @@ async def main():
 
 if __name__ == "__main__":
     # load model
-    classifier = ktrain.load_predictor('/home/j/Documents/Projects/sentimental-1/telegram/app/distilbert')
+    classifier = xgboost.Booster()
+    classifier.load_model('/home/j/Documents/Projects/social-media-combat-detection/models/xgb_classifier')
     print('Model loaded')
+    with open('/home/j/Documents/Projects/social-media-combat-detection/models/tfid-vectorizer.pickle', 'rb') as handle:
+        vectorizer = pickle.load(handle)
+    print('Vectorizer loaded')
     asyncio.run(main())
