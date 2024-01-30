@@ -5,6 +5,8 @@ from api import *
 import asyncio
 import xgboost
 import pickle
+import re
+import emoji
 
 # define functions to get and send messages
 async def get_messages():
@@ -40,18 +42,21 @@ async def post_report(report):
     async with TelegramClient(api_id=api_id, api_hash=api_hash, session='this') as client:
         await client.send_message(entity=channel, message=report) # update entity to report channel
 
+def clean(msg_text):
+    msg_text = re.sub(r'http[s]?://\S+', '', msg_text)
+    msg_text = re.sub(r'\s*[@#]\w+\b', '', msg_text)
+    msg_text = emoji.demojize(msg_text)
+    return msg_text
 
 # define function to classify messages with model
 async def find_combats(messages):
     # iteratively predicts messages
-    # does NOT currently clean/pre-process the message
-    # this func should be improved
     global classifier
     combats = []
     count = 0
     total = len(messages)
     for message in messages:
-        vectorized = xgboost.DMatrix(vectorizer.transform([message.text]))
+        vectorized = xgboost.DMatrix(vectorizer.transform([clean(message.text)]))
         if classifier.predict(vectorized) >= 0.5:
             print('Combat found')
             combats.append(message)
