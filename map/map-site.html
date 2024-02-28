@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <!-- import leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <title>Social Media Combat Detection Map</title>
+
+  </head>
+  <body>
+    <h1>I'm the map!</h1>
+    <div id="map" style="width: 600px; height: 400px;"></div>
+    <script type="text/javascript">
+
+        // initialize the map
+        
+        var map = L.map('map').setView([49.5, 35], 5); // change lat, long, zoom in setView
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // add marker to map and define its pop up
+        var marker = L.marker([49.5, 31]).addTo(map);
+        var popupText = "<b>Hello world!</b><br>I am a popup."
+        marker.bindPopup(popupText).openPopup();
+
+    </script>
+  </body>
+</html>
