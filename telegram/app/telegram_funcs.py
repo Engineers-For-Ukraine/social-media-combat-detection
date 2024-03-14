@@ -1,10 +1,7 @@
 from telethon import TelegramClient
 from datetime import timezone, timedelta, datetime
 from time import sleep
-
-api_id = "23177813"
-api_hash = "59766141d5e73666ac366b66da4acf81"
-phone_num = "+19379250695"
+from api import *
 
 # define functions to get and send messages
 async def get_messages():
