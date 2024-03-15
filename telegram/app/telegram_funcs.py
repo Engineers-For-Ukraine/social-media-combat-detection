@@ -19,7 +19,8 @@ async def post_message(message):
     # argument must be only the text of a message (i.e. message.text should be passed)
     global api_id
     global api_hash
-    channel = 'CombatMessagesUA' # update this var to change channel
+    channel = -1002016594072 # use this line for testing
+    #channel = 'CombatMessagesUA' # update this var to change channel
     async with TelegramClient(api_id=api_id, api_hash=api_hash, session='this') as client:
         await client.send_message(entity=channel, message=message)
         print('Message posted')

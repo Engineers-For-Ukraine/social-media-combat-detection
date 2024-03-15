@@ -37,7 +37,8 @@ async def main():
 
                 # send combats to map
                 try:
-                    map(combats)
+                    map_messages(combats)
+                    print('Messages sent to map database')
                 except:
                     errors.append('Failed to send messages to map database')
 

@@ -37,7 +37,7 @@ def process(message):
         doc_list.append({'location':location, 'message':message})
     return doc_list
 
-def map(messages):
+def map_messages(messages):
 
     #connect to mongodb
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -49,6 +49,8 @@ def map(messages):
     for message in messages:
         message_rows = process(message)
         rows += message_rows
+
+    print(f'{len(rows)} locations found')
 
     # push data to db
     mycol.insert_many(rows)
