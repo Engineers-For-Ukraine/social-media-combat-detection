@@ -5,5 +5,4 @@ telegram/app/api.py
 telegram/this.session
 /models/distilbert
 /models/bert
-telegram/app/distilbert
 /annotation-site/node_modules
