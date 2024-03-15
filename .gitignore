@@ -6,4 +6,4 @@ telegram/this.session
 /models/distilbert
 /models/bert
 /annotation-site/node_modules
-/map/node_modules
+/map-site/node_modules
