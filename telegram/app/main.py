@@ -1,5 +1,6 @@
 from telegram_funcs import *
 from model_funcs import *
+from map_funcs import *
 
 import asyncio
 from time import sleep
@@ -34,10 +35,18 @@ async def main():
                 num_combats = len(combats)
                 print(f"{num_combats} found")
 
-                # post combats to telegram
+                # process combats
                 for combat in combats:
                     try:
+                        # add combat to map
+                        try:
+                            map(combat)
+                        except:
+                            errors.append('Failed to add combat to map')
+
+                        # post combat message to telegram
                         await post_message(combat)
+
                     except:
                         errors.append('Failed to post combat messages')
             except:
