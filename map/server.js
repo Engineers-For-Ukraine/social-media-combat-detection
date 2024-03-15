@@ -1,22 +1,29 @@
-const express = require('express');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const app = express();
-const { MongoClient } = require('mongodb');
 
-// Connection info
-const uri = 'mongodb://localhost:27017';
-const dbName = 'test';
-const colName = 'messages';
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
 
-const client = new MongoClient(uri);
+app.use(cors(corsOptions));
 
-// Connect the client to the server
-client.connect();
-console.log('Connected successfully to MongoDB');
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
 
-// Connect to the specific database and collection
-const db = client.db(dbName);
-const collection = db.collection(colName);
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(3000, () => {    console.log('listening on 3000')  });
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "hello world" });
+});
 
-app.get('/', (req, res) => {  res.sendFile(__dirname + '/map-site.html')});
+// set port, listen for requests
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
+
