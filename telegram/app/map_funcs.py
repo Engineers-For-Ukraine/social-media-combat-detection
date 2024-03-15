@@ -1,4 +1,5 @@
 import re
+import pymongo
 from location_list import location_list, coord_dict
 
 def extract_capitalized_words(input_string):
@@ -10,7 +11,7 @@ def extract_capitalized_words(input_string):
     
     return capitalized_words
 
-def get_coords(locations):
+def get_coords_from_locations(locations):
     coords = []
     for location in locations:
         if location in coord_dict.keys():
@@ -23,14 +24,31 @@ def get_locations(message):
     for cap in caps:
         if cap in location_list:
             locations.append(cap)
-    coord_list = get_coords(locations)
+    coord_list = get_coords_from_locations(locations)
     return coord_list
             
 
-def map(message):
-    # TODO
+def process(message):
     # get location and coords
     locations = get_locations(message)
     # format location/coords and message correctly
-    # send formatted data to database for map site
-    pass
+    doc_list = []
+    for location in locations:
+        doc_list.append({'location':location, 'message':message})
+    return doc_list
+
+def map(messages):
+
+    #connect to mongodb
+    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+    mydb = myclient["test"]
+    mycol = mydb["messages"]
+
+    # format data for mongo
+    rows = []
+    for message in messages:
+        message_rows = process(message)
+        rows += message_rows
+
+    # push data to db
+    mycol.insert_many(rows)
