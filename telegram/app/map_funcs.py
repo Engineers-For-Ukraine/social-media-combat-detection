@@ -1,5 +1,5 @@
 import re
-from location_list import location_list
+from location_list import location_list, coord_dict
 
 def extract_capitalized_words(input_string):
     # Define a regular expression pattern to match capitalized words
@@ -10,13 +10,21 @@ def extract_capitalized_words(input_string):
     
     return capitalized_words
 
+def get_coords(locations):
+    coords = []
+    for location in locations:
+        if location in coord_dict.keys():
+            coords.append(coord_dict[location])
+    return coords
+
 def get_locations(message):
     locations = []
     caps = extract_capitalized_words(message)
     for cap in caps:
         if cap in location_list:
             locations.append(cap)
-    return locations
+    coord_list = get_coords(locations)
+    return coord_list
             
 
 def map(message):
