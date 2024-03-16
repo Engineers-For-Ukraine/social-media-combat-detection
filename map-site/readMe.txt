@@ -1,1 +1,0 @@
-src/http-common.js needs to be updated to use the correct base url

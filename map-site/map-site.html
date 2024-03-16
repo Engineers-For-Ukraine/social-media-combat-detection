@@ -29,6 +29,20 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
+        // get messages from database
+        async function getDocuments() {
+          const response = await fetch('/getDocuments');
+          const documents = await response.json();
+          documents.forEach(doc => {
+            var marker = L.marker(doc.location).addTo(map);
+            var popupText = doc.message;
+            console.log(popupText)
+            marker.bindPopup(popupText).openPopup();
+          });
+        }
+
+        getDocuments();
+
         // add marker to map and define its pop up
         var marker = L.marker([49.5, 31]).addTo(map);
         var popupText = "<b>Hello world!</b><br>I am a popup."

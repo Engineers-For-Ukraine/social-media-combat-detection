@@ -1,44 +1,37 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-
+const express = require('express');
 const app = express();
+const { MongoClient } = require('mongodb');
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+// Connection info
+const uri = 'mongodb://localhost:27017';
+const dbName = 'test';
+const colName = 'messages';
 
-app.use(cors(corsOptions));
+const client = new MongoClient(uri);
 
-// parse requests of content-type - application/json
-app.use(bodyParser.json());
+// Connect the client to the server
+client.connect();
+console.log('Connected successfully to MongoDB');
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+// Connect to the specific database and collection
+const db = client.db(dbName);
+const collection = db.collection(colName);
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "hello world" });
+app.get('/getDocuments', async (req, res) => {
+  try {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection(colName);
+    const documents = await collection.find({}).toArray();
+    res.json(documents);
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  } finally {
+    await client.close();
+  }
 });
 
-require("./app/routes/message.routes")(app);
+app.listen(3000, () => {    console.log('listening on 3000')  });
 
-// set port, listen for requests
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
-
-const db = require("./app/models");
-db.mongoose
-  .connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Connected to the database!");
-  })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
-  });
+app.get('/', (req, res) => {  res.sendFile(__dirname + '/map-site.html')});
