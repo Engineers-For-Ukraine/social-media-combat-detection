@@ -1,2 +1,0 @@
-Social media posts can be assigned a sentiment score, which is a numerical evaluation of the relative positive or negative emotions displayed in the text. These sentiment scores can be used for prediction of various behaviors, both on an individual and societal scale. This project uses sentiment scores to determine whether or not there is an ongoing military battle in the regions the social media posts reference within an active war zone using data from the ongoing Russo-Ukrainian War. This detection is done using a series of supervised learning models.
-

@@ -1,0 +1,5 @@
+write documentation for telegram app
+write documentation for map-site
+prettify map-site
+expand/improve location getting in /telegram/app/map_funcs.py 
+improve classifier models, ideally implementing Big Bear architecture
