@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-
     <!-- import leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -15,14 +14,15 @@
     <title>Social Media Combat Detection Map</title>
 
   </head>
-  <body>
-    <h1>I'm the map!</h1>
-    <div id="map" style="width: 600px; height: 400px;"></div>
+  <body style="padding:2%">
+    <h1>CombatMessagesUA</h1>
+    <p style="width:85%">This map aggregates reports of combat and military operations from Ukrainian telegram channels. Posts are sourced from @AmplifyUkraine, and filtered by an AI model. This map is updated on a delay and may not be accurate.</p>
+    <div id="map" style="width: 95%; height: 600px;"></div>
     <script type="text/javascript">
 
         // initialize the map
         
-        var map = L.map('map').setView([49.5, 35], 5); // change lat, long, zoom in setView
+        var map = L.map('map').setView([49.5, 35], 6); // change lat, long, zoom in setView
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -34,19 +34,15 @@
           const response = await fetch('/getDocuments');
           const documents = await response.json();
           documents.forEach(doc => {
+            // map each message
             var marker = L.marker(doc.location).addTo(map);
             var popupText = doc.message;
-            console.log(popupText)
             marker.bindPopup(popupText).openPopup();
           });
         }
 
         getDocuments();
 
-        // add marker to map and define its pop up
-        var marker = L.marker([49.5, 31]).addTo(map);
-        var popupText = "<b>Hello world!</b><br>I am a popup."
-        marker.bindPopup(popupText).openPopup();
 
     </script>
   </body>
