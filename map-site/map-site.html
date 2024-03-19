@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    
     <!-- import leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -11,13 +12,15 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
 
+    <img rel="import", href="icon.jpg">
+
     <title>Social Media Combat Detection Map</title>
 
   </head>
   <body style="padding:2%">
-    <h1>CombatMessagesUA</h1>
+    <h1><img src="/icon" alt="logo" style="height: 30px;"/>CombatMessagesUA</h1>
     <p style="width:85%">This map aggregates reports of combat and military operations from Ukrainian telegram channels. Posts are sourced from @AmplifyUkraine, and filtered by an AI model. This map is updated on a delay and may not be accurate.</p>
-    <div id="map" style="width: 95%; height: 600px;"></div>
+    <div id="map" style="width: 98%; height: 75vh;"></div>
     <script type="text/javascript">
 
         // initialize the map
