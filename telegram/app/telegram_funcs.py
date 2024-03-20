@@ -1,7 +1,7 @@
 from telethon import TelegramClient
 from datetime import timezone, timedelta, datetime
 from time import sleep
-from api import *
+from app.api import *
 
 # define functions to get and send messages
 async def get_messages():
