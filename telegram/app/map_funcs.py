@@ -1,6 +1,7 @@
 import re
 import pymongo
-from location_list import location_list, coord_dict
+from app.location_list import coord_dict
+from thefuzz import process
 
 def extract_capitalized_words(input_string):
     # Define a regular expression pattern to match capitalized words
@@ -11,30 +12,26 @@ def extract_capitalized_words(input_string):
     
     return capitalized_words
 
-def get_coords_from_locations(locations):
-    coords = []
-    for location in locations:
-        if location in coord_dict.keys():
-            coords.append(coord_dict[location])
-    return coords
-
 def get_locations(message):
-    locations = []
+    MINIMUM_SIMILARITY = 91
+    coord_list = []
     caps = extract_capitalized_words(message)
     for cap in caps:
-        if cap in location_list:
-            locations.append(cap)
-    coord_list = get_coords_from_locations(locations)
+        matches = process.extract(cap, coord_dict.keys())
+        best_match = max(matches, key=lambda x: x[1] if isinstance(x[1], (int, float)) else float('-inf'))
+        if best_match[1] >= MINIMUM_SIMILARITY:
+            # append [best_match, coords] as list to coord_list
+            coord_list.append([best_match, coord_dict[best_match[0]]])
     return coord_list
             
 
-def process(message):
+def process_message(message):
     # get location and coords
     locations = get_locations(message)
     # format location/coords and message correctly
     doc_list = []
     for location in locations:
-        doc_list.append({'location':location, 'message':message})
+        doc_list.append({'place_name':location[0][0], 'location_confidence': location[0][1], 'location':location[1], 'message':message})
     return doc_list
 
 def map_messages(messages):
@@ -47,7 +44,7 @@ def map_messages(messages):
     # format data for mongo
     rows = []
     for message in messages:
-        message_rows = process(message)
+        message_rows = process_message(message)
         rows += message_rows
 
     print(f'{len(rows)} locations found')
