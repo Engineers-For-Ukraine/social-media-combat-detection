@@ -2,6 +2,7 @@ import re
 import pymongo
 from app.location_list import coord_dict
 from thefuzz import process
+from datetime import datetime, timezone
 
 def extract_capitalized_words(input_string):
     # Define a regular expression pattern to match capitalized words
@@ -31,7 +32,7 @@ def process_message(message):
     # format location/coords and message correctly
     doc_list = []
     for location in locations:
-        doc_list.append({'place_name':location[0][0], 'location_confidence': location[0][1], 'location':location[1], 'message':message})
+        doc_list.append({'datetime': datetime.now(tz=timezone.utc), 'place_name':location[0][0], 'location_confidence': location[0][1], 'location':location[1], 'message':message})
     return doc_list
 
 def map_messages(messages):
