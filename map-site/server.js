@@ -37,6 +37,6 @@ app.get('/getDocuments', async (req, res) => {
 
 app.listen(3000, () => {    console.log('listening on 3000')  });
 
-app.get('/e4ua', (req, res) => {  res.sendFile(__dirname + '/E4UA.png')});
+app.get('/cmua', (req, res) => {  res.sendFile(__dirname + '/cmua.png')});
 
 app.get('/', (req, res) => {  res.sendFile(__dirname + '/map-site.html')});
