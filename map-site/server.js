@@ -22,7 +22,7 @@ app.get('/getDocuments', async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
     const collection = db.collection(colName);
-    const weekAgoDate = new Date(new Date() - 7 * 24 * 60 * 60 * 1000); // Date object for a week ago
+    const weekAgoDate = new Date(new Date() - 3 * 24 * 60 * 60 * 1000); // Date object for 3 days ago
     const documents = await collection.find({
       datetime: { $gte: weekAgoDate } // Filter documents dated within the past week
     }).toArray();
