@@ -33,4 +33,4 @@ async def post_report(report):
     global api_hash
     channel = -1002008284745 # update this to private report channel
     async with TelegramClient(api_id=api_id, api_hash=api_hash, session='this') as client:
-        await client.send_message(entity=channel, message=report) # update entity to report channel
+        await client.send_message(entity=channel, message=report)

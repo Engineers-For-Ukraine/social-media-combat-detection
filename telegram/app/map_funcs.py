@@ -38,7 +38,7 @@ def process_message(message):
 def map_messages(messages):
 
     #connect to mongodb
-    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+    myclient = pymongo.MongoClient("mongodb://localhost:27017/") # change this line to correct host
     mydb = myclient["test"]
     mycol = mydb["messages"]
 
