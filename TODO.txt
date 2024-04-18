@@ -1,5 +1,16 @@
-write documentation for telegram app
-write documentation for map-site
+High Priority
+---------------
+containerize it!
+
+
+Low Priority
+------------
 refactor model_funcs as custom class?
+add russian Telegram posts
 implement spacy NER in /telegram/app/map_funcs.py 
-improve classifier models, ideally implementing Big Bear architecture
+improve classifier models, implement Big Bear architecture
+
+Long Term 
+---------
+what kind of analytics can we start pulling out?
+can we generalize to other regions?
