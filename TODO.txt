@@ -1,3 +1,7 @@
+High Priority
+-------------
+fix telegram status reporting of mapped messages
+
 Short Term
 ----------
 refactor dockerfile for python
