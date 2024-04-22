@@ -1,6 +1,9 @@
 # CombatMessagesUA
 This repo contains the code for CombatMessagesUA. This project aggregates and maps reports of combat or other military activity scraped from Ukrainian social media posts on the app Telegram. This repo contains three main applications: Annotate4Ukraine in 'annotation-site', an app for scraping, classifying, and posting messages to telegram in 'telegram', and a website for presenting mapped reports in map-site. Each of these is addressed below and contains its own 'README.md' for more specific reference.
 
+## dist
+This folder contains the 'production' version of the Map, Telegram app, and their associated Dockerfiles. Cloning just this folder will allow running the entire app by running the command 'docker run --build'.
+
 ## Annotate4Ukraine
 Annotate4 Ukraine is a website for user-friendly data annotation. The webpage presents users with guidelines for annotation and then serves a single message at a time for users to assign as either 'yes', 'no', or 'not sure'.
 
