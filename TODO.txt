@@ -1,5 +1,6 @@
 Short Term
 ----------
+refactor dockerfile for python
 refactor model_funcs as custom class?
 add russian Telegram posts
 implement spacy NER in /telegram/app/map_funcs.py 
