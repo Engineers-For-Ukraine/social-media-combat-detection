@@ -1,10 +1,5 @@
-High Priority
----------------
-containerize it!
-
-
-Low Priority
-------------
+Short Term
+----------
 refactor model_funcs as custom class?
 add russian Telegram posts
 implement spacy NER in /telegram/app/map_funcs.py 
