@@ -36,12 +36,16 @@ async def main():
                 num_combats = len(combats)
                 print(f"{num_combats} found")
 
-                # send combats to map
-                try:
-                    mapped = map_messages(combats)
-                    print('Messages sent to map database')
-                except:
-                    errors.append('Failed to send messages to map database')
+                # send combats to map if there are any
+                if num_combats != 0:
+                    try:
+                        mapped = map_messages(combats)
+                        print('Messages sent to map database')
+                    except:
+                        errors.append('Failed to send messages to map database')
+                else:
+                    # set number of messages sent to map to 0 for report
+                    mapped = 0
 
                 # post combats to telegram
                 for combat in combats:
