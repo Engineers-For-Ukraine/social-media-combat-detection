@@ -13,14 +13,14 @@ In the 'app' folder are the '.py' files for the 'main.py' imports. The files are
 
 This file contains the functions for extracting data from messages which have been classified as relevant by the classifier model. Currently these functions pull out locations by location names and fuzzy searching the location_list. This file also contains the function that sends messages from the Telegram app to a MongoDB database, which must be updated and configured for deployment.
 
-### model_funcs
+### classifier
 
-This file contains function to load the classifier model, clean/preprocess messages for classification, and run inferencing on those messages. This file must be updated when the model is changed.
+This file implements a class with methods to load the classifier model, clean/preprocess messages for classification, and run inferencing on those messages. This file must be updated when the model is changed.
 
 
-### telegram_funcs
+### telebot
 
-This file implements scraping posts from Telegram and posting messages to the main aggregator feed @CombatMessagesUA as well as posting status information to a private 'Reports' channel.
+This file implements a class for scraping posts from Telegram and posting messages to the main aggregator feed @CombatMessagesUA as well as posting status information to a private 'Reports' channel.
 
 
 ### Other files
