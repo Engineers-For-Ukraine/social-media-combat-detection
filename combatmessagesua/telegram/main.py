@@ -1,6 +1,7 @@
-from app.telegram_funcs import *
-from app.map_funcs import *
+from app.telebot import Telebot
 from app.classifier import XGBClassifier
+
+from app.map_funcs import * # to be refactored
 
 import asyncio
 from time import sleep
@@ -8,6 +9,7 @@ from time import sleep
 async def main():
 
     classifier = XGBClassifier(model_path='models/xgb_classifier', vectorizer_path='models/tfid-vectorizer.pickle')
+    telebot = Telebot()
 
     while True:
 
@@ -21,7 +23,7 @@ async def main():
         print(f'Running at {current_time}')  
 
         try:
-            messages = await get_messages()
+            messages = await telebot.get_messages()
             num_messages = len(messages)
             print(f"{num_messages} messages downloaded")
         except:
@@ -52,7 +54,7 @@ async def main():
                 # post combats to telegram
                 for combat in combats:
                     try:
-                        await post_message(combat)
+                        await telebot.post_message(combat)
                     except:
                         errors.append('Failed to post combat messages')
             except:
@@ -72,7 +74,7 @@ async def main():
 
         try:
             print('Posting report...')
-            await post_report(report_string)
+            await telebot.post_report(report_string)
         except:
             print('Failed to post report.')
 
