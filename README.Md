@@ -6,7 +6,7 @@ Annotate4 Ukraine is a website for user-friendly data annotation. The webpage pr
 
 ## CombatMessagesUA
 
-This folder contains the 'production' version of the Map, Telegram app, and their associated Dockerfiles. Cloning just this folder will allow running the entire app by running the command 'docker run --build'.
+This folder contains the 'production' version of the Map, Telegram app, and their associated Dockerfiles.
 
 ### Telegram
 The telegram app in this repo scrapes messages from Ukrainian Telegram channels, classifies them as either being about a combat event or not, then posts those that are about combat to our Telegram channel @CombatMessagesUA
