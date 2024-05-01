@@ -1,18 +1,20 @@
 from app.telegram_funcs import *
-from app.model_funcs import *
 from app.map_funcs import *
+from app.classifier import XGBClassifier
 
 import asyncio
 from time import sleep
 
 async def main():
-    global classifier, vectorizer
+
+    classifier = XGBClassifier(model_path='models/xgb_classifier', vectorizer_path='models/tfid-vectorizer.pickle')
 
     while True:
 
         errors = []
         num_messages = 0
-        num_combats = 0      
+        num_combats = 0
+        mapped = 0      
 
         current_time = datetime.now()
 
@@ -31,7 +33,7 @@ async def main():
             try:
                 # classify messages
                 print('Classifying messages...')
-                combats = await find_combats(messages, classifier=classifier, vectorizer=vectorizer)
+                combats = classifier.classify(messages)
                 print('Messages classified')
                 num_combats = len(combats)
                 print(f"{num_combats} found")
@@ -72,12 +74,11 @@ async def main():
             print('Posting report...')
             await post_report(report_string)
         except:
-            pass
+            print('Failed to post report.')
 
         print('Done! Going to sleep for an hour...')
 
         sleep(3600)
 
 if __name__ == "__main__":
-    classifier, vectorizer = load_model()
     asyncio.run(main())
