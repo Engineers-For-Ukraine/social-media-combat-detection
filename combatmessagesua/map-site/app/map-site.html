@@ -38,9 +38,10 @@
           const documents = await response.json();
           documents.forEach(doc => {
             // map each message
-            var marker = L.marker(doc.location).addTo(map);
-            var popupText = doc.message;
-            marker.bindPopup(popupText).openPopup();
+            var marker = L.marker(doc.location).addTo(map);;
+            marker.bindPopup(doc.message, {
+              maxHeight:150,
+            }).openPopup();
           });
         }
 
