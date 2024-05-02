@@ -24,15 +24,18 @@ async def main():
 
         current_time = datetime.now()
 
+        sources = ['amplifyukraine', 'intelslavaua'] # add additional sources here
+
         print(f'Running at {current_time}')  
 
-        try:
-            messages = await telebot.get_messages('amplifyukraine')
-            num_messages = len(messages)
-            print(f"{num_messages} messages downloaded")
-        except:
-            print('Failed to get messages')
-            errors.append('Failed to get messages')
+        for source in sources:
+            try:
+                messages = await telebot.get_messages(source)
+                num_messages = len(messages)
+                print(f"{num_messages} messages downloaded")
+            except:
+                print('Failed to get messages')
+                errors.append(f'Failed to get messages from {source}')
     
     
         if num_messages > 0:
