@@ -6,6 +6,9 @@ from app.map_funcs import * # to be refactored
 import asyncio
 from time import sleep
 
+# IMPORTANT: All methods and functions should always take in and return whole messages
+# if a method works only with a particular part of the message, the method should handle that itself
+
 async def main():
 
     classifier = XGBClassifier(model_path='models/xgb_classifier', vectorizer_path='models/tfid-vectorizer.pickle')
@@ -23,7 +26,7 @@ async def main():
         print(f'Running at {current_time}')  
 
         try:
-            messages = await telebot.get_messages()
+            messages = await telebot.get_messages('amplifyukraine')
             num_messages = len(messages)
             print(f"{num_messages} messages downloaded")
         except:
@@ -35,6 +38,7 @@ async def main():
             try:
                 # classify messages
                 print('Classifying messages...')
+                # classifier should always take in and return complete messages not just message.text
                 combats = classifier.classify(messages)
                 print('Messages classified')
                 num_combats = len(combats)
