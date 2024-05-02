@@ -1,7 +1,6 @@
 from app.telebot import Telebot
 from app.classifier import XGBClassifier
-
-from app.map_funcs import * # to be refactored
+from app.mapper import Mapper
 
 import asyncio
 from time import sleep
@@ -14,6 +13,7 @@ async def main():
 
     classifier = XGBClassifier(model_path='models/xgb_classifier', vectorizer_path='models/tfid-vectorizer.pickle')
     telebot = Telebot()
+    mapper = Mapper(client="mongodb://mongo:27017/", db_name="my-db", collection_name="messages")
 
     while True:
 
@@ -51,7 +51,7 @@ async def main():
                 # send combats to map if there are any
                 if num_combats != 0:
                     try:
-                        mapped = map_messages(combats)
+                        mapped = mapper.map_messages(combats)
                         print('Messages sent to map database')
                     except:
                         errors.append('Failed to send messages to map database')
