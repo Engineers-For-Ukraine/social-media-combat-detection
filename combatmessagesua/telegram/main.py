@@ -5,6 +5,7 @@ from app.map_funcs import * # to be refactored
 
 import asyncio
 from time import sleep
+from datetime import datetime
 
 # IMPORTANT: All methods and functions should always take in and return whole messages
 # if a method works only with a particular part of the message, the method should handle that itself

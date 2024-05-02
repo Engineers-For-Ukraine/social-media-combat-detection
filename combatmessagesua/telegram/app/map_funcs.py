@@ -2,7 +2,6 @@ import re
 import pymongo
 from app.location_list import coord_dict
 from thefuzz import process
-from datetime import datetime, timezone
 
 def extract_capitalized_words(input_string):
     # Define a regular expression pattern to match capitalized words
