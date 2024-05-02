@@ -35,7 +35,7 @@ class XGBClassifier:
         for message in messages:
             vectorized = xgboost.DMatrix(self.vectorizer.transform([self.clean(message.text)]))
             if self.classifier.predict(vectorized) >= 0.5:
-                combats.append(message.text)
+                combats.append(message)
             count += 1
             print ("\033[A                                                                  \033[A")
             print(f"{count}/{total} classified...")

@@ -16,7 +16,7 @@ def extract_capitalized_words(input_string):
 def get_locations(message):
     MINIMUM_SIMILARITY = 91
     coord_list = []
-    caps = extract_capitalized_words(message)
+    caps = extract_capitalized_words(message.text)
     for cap in caps:
         matches = process.extract(cap, coord_dict.keys())
         best_match = max(matches, key=lambda x: x[1] if isinstance(x[1], (int, float)) else float('-inf'))
@@ -32,7 +32,11 @@ def process_message(message):
     # format location/coords and message correctly
     doc_list = []
     for location in locations:
-        doc_list.append({'datetime': datetime.now(tz=timezone.utc), 'place_name':location[0][0], 'location_confidence': location[0][1], 'location':location[1], 'message':message})
+        doc_list.append({'datetime': message.date, 
+                         'place_name':location[0][0], 
+                         'location_confidence': location[0][1], 
+                         'location':location[1], 
+                         'message':message.text})
     return doc_list
 
 def map_messages(messages):

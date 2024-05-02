@@ -10,11 +10,11 @@ class Telebot:
         self.api_hash = api_hash
 
     # define functions to get and send messages
-    async def get_messages(self):
+    async def get_messages(self, channel):
         # get AmplifyUkraine messages from last hour 
         messages = []
         async with TelegramClient(api_id=self.api_id, api_hash=self.api_hash, session='this') as client:
-            async for message in client.iter_messages('AmplifyUkraine', offset_date=datetime.now(tz=timezone.utc) - timedelta(hours=1), reverse=True):
+            async for message in client.iter_messages(channel, offset_date=datetime.now(tz=timezone.utc) - timedelta(hours=1), reverse=True):
                 messages.append(message)
         return messages
 
@@ -24,7 +24,7 @@ class Telebot:
         channel = -1002016594072 # use this line for testing
         #channel = 'CombatMessagesUA' # update this var to change channel
         async with TelegramClient(api_id=self.api_id, api_hash=self.api_hash, session='this') as client:
-            await client.send_message(entity=channel, message=message)
+            await client.send_message(entity=channel, message=message.text)
             print('Message posted')
             print('Waiting to avoid Flood Error...')
             sleep(5)
