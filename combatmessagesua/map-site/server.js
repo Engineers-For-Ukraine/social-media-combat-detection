@@ -2,9 +2,14 @@ const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb');
 
+// local test connections
+//const uri = 'mongodb://localhost:27017'; // for local testing
+//const dbName = 'test'; // for local testing
+
 // Connection info
 const uri = 'mongodb://mongo:27017';
 const dbName = 'my-db';
+
 const colName = 'messages';
 
 const client = new MongoClient(uri);
@@ -19,12 +24,16 @@ const collection = db.collection(colName);
 
 app.get('/getDocuments', async (req, res) => {
   try {
+
     await client.connect();
     const db = client.db(dbName);
     const collection = db.collection(colName);
-    const weekAgoDate = new Date(new Date() - 3 * 24 * 60 * 60 * 1000); // Date object for 3 days ago
+
+    const numDaysAgo = 3; // adjust this date to change time window
+
+    const myDate = new Date(new Date() - numDaysAgo * 24 * 60 * 60 * 1000); // Date object for days ago
     const documents = await collection.find({
-      datetime: { $gte: weekAgoDate } // Filter documents dated within the past week
+      datetime: { $gte: myDate } // Filter documents dated within the past week
     }).toArray();
     res.json(documents);
   } catch (error) {
