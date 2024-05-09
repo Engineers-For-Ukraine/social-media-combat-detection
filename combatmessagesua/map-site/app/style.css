@@ -1,14 +1,20 @@
 body {
     background-color:#B0B0B0; 
-    padding:.5%
+    padding:.5%;
+    text-align: justify; 
+    font-family: Arial;
+}
+
+h2 {
+    padding:1.5%;
+    padding-bottom: 0;
+    color:#3D3D3D; 
 }
 
 p {
     padding:1.5%;
-    color:#5D5D5D; 
+    color:#3D3D3D; 
     font-size: 2vh; 
-    text-align: justify; 
-    font-family: Arial;
 }
 
 #header {
@@ -20,7 +26,8 @@ p {
 }
 
 #info-box {
-    background-color: #d9d9d9;border-radius: 15px;
+    background-color: #d9d9d9;
+    border-radius: 15px;
 }
 
 #map {
