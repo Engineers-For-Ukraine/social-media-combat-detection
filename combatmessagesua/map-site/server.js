@@ -46,13 +46,15 @@ app.get('/getDocuments', async (req, res) => {
 
 app.listen(3000, () => {    console.log('listening on 3000')  });
 
-app.get('/cmua', (req, res) => {  res.sendFile(__dirname + '/app/cmua.png')});
+app.get('/cmua', (req, res) => {  res.sendFile(__dirname + '/app/assets/cmua.png')});
 
-app.get('/favicon.ico', (req, res) => {  res.sendFile(__dirname + '/app/favicon.ico')});
+app.get('/favicon.ico', (req, res) => {  res.sendFile(__dirname + '/app/assets/favicon.ico')});
 
 app.get('/script', (req, res) => {  res.sendFile(__dirname + '/app/script.js')});
 
 app.get('/style', (req, res) => {  res.sendFile(__dirname + '/app/style.css')});
 
 app.get('/', (req, res) => {  res.sendFile(__dirname + '/app/map-site.html')});
+
+app.get('/about', (req, res) => {  res.sendFile(__dirname + '/app/about.html')});
 
