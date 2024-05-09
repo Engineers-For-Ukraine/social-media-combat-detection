@@ -6,6 +6,8 @@
 
     <link href="/favicon.ico" type="image/x-icon" rel="icon" />
 
+    <link rel="stylesheet" type="text/css" href="/style">
+
     <!-- import leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -19,17 +21,20 @@
     <title>CombatMessagesUA</title>
 
   </head>
-  <body style="background-color:#B0B0B0; padding:.5%" >
-    <div id="header" style="width:98%">
+  <body>
+    <div id="header">
 
-      <img src="/cmua" alt="cmua-logo" id="cmua-logo" style="height: 8vh;"/>
-      <div style="background-color: #d9d9d9;border-radius: 15px;"><p style="padding:1.5%;color:#5D5D5D; font-size: 2vh; text-align: justify; font-family: Arial;">This map aggregates reports of combat and military operations from Ukrainian Telegram channels scraped from <a href="https://amplifyukraine.eu/">@AmplifyUkraine</a>. This map is updated on a delay and may not be accurate. CombatMessagesUA is a project of  <a href="https://e4ua.org/">Engineers for Ukraine</a>.</p></div>
+      <img src="/cmua" alt="cmua-logo" id="cmua-logo"/>
+      <div id='info-box'><p>This map aggregates reports of combat and military operations from Ukrainian Telegram channels scraped from 
+        <a href="https://amplifyukraine.eu/">@AmplifyUkraine</a>. This map is updated on a delay and may not be accurate. CombatMessagesUA is a project of  
+        <a href="https://e4ua.org/">Engineers for Ukraine</a>.</p>
+      </div>
     
     </div>
     
     <!-- Now create the map with its own div and script-->
-    <div id="map" style="height: 75vh; border-radius: 15px;"></div>
-    
+    <div id="map"></div>
+
     <script src="/script"></script>
   
   </body>

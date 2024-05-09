@@ -52,5 +52,7 @@ app.get('/favicon.ico', (req, res) => {  res.sendFile(__dirname + '/app/favicon.
 
 app.get('/script', (req, res) => {  res.sendFile(__dirname + '/app/script.js')});
 
+app.get('/style', (req, res) => {  res.sendFile(__dirname + '/app/style.css')});
+
 app.get('/', (req, res) => {  res.sendFile(__dirname + '/app/map-site.html')});
 

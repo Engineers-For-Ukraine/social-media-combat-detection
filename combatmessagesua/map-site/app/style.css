@@ -1,0 +1,29 @@
+body {
+    background-color:#B0B0B0; 
+    padding:.5%
+}
+
+p {
+    padding:1.5%;
+    color:#5D5D5D; 
+    font-size: 2vh; 
+    text-align: justify; 
+    font-family: Arial;
+}
+
+#header {
+    width:98%
+}
+
+#cmua-logo {
+    height: 8vh;
+}
+
+#info-box {
+    background-color: #d9d9d9;border-radius: 15px;
+}
+
+#map {
+    height: 75vh; 
+    border-radius: 15px;
+}
