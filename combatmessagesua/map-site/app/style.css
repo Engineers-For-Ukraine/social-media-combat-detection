@@ -17,8 +17,15 @@ p {
     font-size: 2vh; 
 }
 
-#header {
-    width:98%
+#about-button {
+    float: right;
+    background-color: #d9d9d9;
+    border-radius: 5px;
+    height: 6vh;
+    line-height: 6vh;
+    width: 10%;
+    text-align: center;
+    font-family: serif;
 }
 
 #cmua-logo {
