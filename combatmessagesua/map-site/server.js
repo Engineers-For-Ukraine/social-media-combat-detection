@@ -48,4 +48,9 @@ app.listen(3000, () => {    console.log('listening on 3000')  });
 
 app.get('/cmua', (req, res) => {  res.sendFile(__dirname + '/app/cmua.png')});
 
+app.get('/favicon.ico', (req, res) => {  res.sendFile(__dirname + '/app/favicon.ico')});
+
+app.get('/script', (req, res) => {  res.sendFile(__dirname + '/app/script.js')});
+
 app.get('/', (req, res) => {  res.sendFile(__dirname + '/app/map-site.html')});
+
