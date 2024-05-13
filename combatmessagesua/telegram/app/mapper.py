@@ -18,6 +18,7 @@ class Mapper:
     def map_messages(self, messages):
         rows = self.make_rows_for_db(messages)
         self.collection.insert_many(rows)
+        return len(rows)
 
     # this helper function that loops over messages and processes them
     def make_rows_for_db(self, messages):
