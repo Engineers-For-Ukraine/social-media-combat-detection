@@ -18,6 +18,7 @@ async def main():
     while True:
 
         errors = []
+        messages = []
         num_messages = 0
         num_combats = 0
         mapped = 0      
@@ -30,8 +31,8 @@ async def main():
 
         for source in sources:
             try:
-                messages = await telebot.get_messages(source)
-                num_messages = len(messages)
+                messages += await telebot.get_messages(source)
+                num_messages += len(messages)
                 print(f"{num_messages} messages downloaded")
             except:
                 print('Failed to get messages')
