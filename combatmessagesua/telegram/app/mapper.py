@@ -61,7 +61,7 @@ class Mapper:
 
     # this is a helper function for get_locations that 
     # gets all the capitalized words from a string and returns them
-    def extract_capitalized_words(input_string):
+    def extract_capitalized_words(self, input_string):
         # Define a regular expression pattern to match capitalized words
         pattern = r'\b[A-Z][a-z]*\b'
         
