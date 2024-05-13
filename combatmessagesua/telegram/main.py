@@ -34,8 +34,9 @@ async def main():
                 messages += await telebot.get_messages(source)
                 num_messages += len(messages)
                 print(f"{num_messages} messages downloaded")
-            except:
+            except Exception as e:
                 print('Failed to get messages')
+                print(e)
                 errors.append(f'Failed to get messages from {source}')
     
     
@@ -54,7 +55,8 @@ async def main():
                     try:
                         mapped = mapper.map_messages(combats)
                         print('Messages sent to map database')
-                    except:
+                    except Exception as e:
+                        print(e)
                         errors.append('Failed to send messages to map database')
                 else:
                     # set number of messages sent to map to 0 for report
@@ -64,8 +66,9 @@ async def main():
                 for combat in combats:
                     try:
                         await telebot.post_message(combat)
-                    except:
+                    except Exception as e:
                         errors.append('Failed to post combat messages')
+                        print(e)
             except:
                 errors.append('Failed to classify messages')
         
@@ -84,7 +87,8 @@ async def main():
         try:
             print('Posting report...')
             await telebot.post_report(report_string)
-        except:
+        except Exception as e:
+            print(e)
             print('Failed to post report.')
 
         print('Done! Going to sleep for an hour...')
