@@ -1,7 +1,5 @@
 FROM python:3.10.12
 WORKDIR /telegram
 ADD . . 
-RUN pip install asyncio pymongo thefuzz datetime 
-RUN pip install emoji pickle5 xgboost telethon 
-RUN pip install scikit-learn
+RUN pip install -r requirements.txt
 CMD ["python3", "main.py"]
