@@ -25,7 +25,7 @@ async def main():
 
         current_time = datetime.now()
 
-        sources = ['amplifyukraine', 'intelslavaua'] # add additional sources here
+        sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report'] # add additional sources here
 
         print(f'Running at {current_time}')  
 
