@@ -86,7 +86,7 @@ async def main():
                         print('Messages sent to map database')
                     except Exception as e:
                         print(e)
-                        errors.append('Failed to send messages to map database')
+                        errors.append('Failed to get locations for map database')
                 else:
                     # set number of messages sent to map to 0 for report
                     mapped = 0
@@ -111,7 +111,7 @@ async def main():
         for error in errors:
             error_string += error + '\n'
 
-        report_string = f"{current_time}\nRetrieved {num_messages} new messages. \nFound {num_combats} combat events. \n{mapped} messages sent to map. \nErrors: {error_string}"
+        report_string = f"{current_time}\nRetrieved {num_messages} new messages. \nFound {num_combats} combat events. \n{mapped} locations sent to map. \nErrors: {error_string}"
 
         try:
             print('Posting report...')

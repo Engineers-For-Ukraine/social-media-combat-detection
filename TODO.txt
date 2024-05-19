@@ -1,6 +1,7 @@
 High Priority
 -------------
-fix 'mapped' count in reports
+train other language classifiers!
+only translate positive results!
 
 Short Term
 ----------
