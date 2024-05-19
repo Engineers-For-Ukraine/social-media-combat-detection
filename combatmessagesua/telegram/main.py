@@ -2,6 +2,8 @@ from app.telebot import Telebot
 from app.classifier import XGBClassifier
 from app.mapper import Mapper
 
+from transformers import pipeline
+
 import asyncio
 from time import sleep
 from datetime import datetime
@@ -14,12 +16,16 @@ async def main():
     classifier = XGBClassifier(model_path='models/xgb_classifier', vectorizer_path='models/tfid-vectorizer.pickle')
     telebot = Telebot()
     mapper = Mapper(client="mongodb://mongo:27017/", db_name="my-db", collection_name="messages")
+    ru_translator = pipeline("translation_ru_to_en", model="Helsinki-NLP/opus-mt-ru-en")
+
     sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report'] # add additional sources here
+    ru_sources = ['astrapress']
 
     while True:
 
         errors = []
         messages = []
+        ru_messages = []
         num_messages = 0
         num_combats = 0
         mapped = 0      
@@ -28,10 +34,11 @@ async def main():
 
         print(f'Running at {current_time}')  
 
+        # get messages from english language sources
+
         for source in sources:
             try:
                 messages += await telebot.get_messages(source)
-                num_messages += len(messages)
                 print(f"{num_messages} messages downloaded")
             except Exception as e:
                 print('Failed to get messages')
@@ -39,6 +46,27 @@ async def main():
                 errors.append(f'Failed to get messages from {source}')
     
     
+        # get messages from russian language sources
+
+        for source in ru_sources:
+            try:
+                ru_messages += await telebot.get_messages(source)
+                print(f"{num_messages} messages downloaded")
+
+            except Exception as e:
+                print('Failed to get messages')
+                print(e)
+                errors.append(f'Failed to get messages from {source}')
+
+        # translate russian messages
+        for message in ru_messages:
+            translation = ru_translator(message.text)
+            message.text = f'TRANSLATION: {translation[0]['translation_text']} ORIGINAL: {message.text} SOURCE: {source}'
+
+        messages.append(ru_messages)
+        
+        num_messages = len(messages)
+
         if num_messages > 0:
 
             try:
