@@ -13,10 +13,15 @@ from datetime import datetime
 
 async def main():
 
+    print('loading models')
     classifier = XGBClassifier(model_path='models/xgb_classifier', vectorizer_path='models/tfid-vectorizer.pickle')
+    print('classifier loaded')
     telebot = Telebot()
+    print('telebot initialized')
     mapper = Mapper(client="mongodb://mongo:27017/", db_name="my-db", collection_name="messages")
+    print('databases connnected')
     ru_translator = pipeline("translation_ru_to_en", model="Helsinki-NLP/opus-mt-ru-en")
+    print('translator loaded')
 
     sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report'] # add additional sources here
     ru_sources = ['astrapress']
@@ -38,8 +43,9 @@ async def main():
 
         for source in sources:
             try:
-                messages += await telebot.get_messages(source)
-                print(f"{num_messages} messages downloaded")
+                new_messages = await telebot.get_messages(source)
+                print(f"{len(new_messages)} messages downloaded from {source}")
+                messages += new_messages
             except Exception as e:
                 print('Failed to get messages')
                 print(e)
@@ -50,8 +56,9 @@ async def main():
 
         for source in ru_sources:
             try:
-                ru_messages += await telebot.get_messages(source)
-                print(f"{num_messages} messages downloaded")
+                new_messages = await telebot.get_messages(source)
+                ru_messages += new_messages
+                print(f"{len(new_messages)} messages downloaded from {source}")
 
             except Exception as e:
                 print('Failed to get messages')
@@ -59,11 +66,20 @@ async def main():
                 errors.append(f'Failed to get messages from {source}')
 
         # translate russian messages
-        for message in ru_messages:
-            translation = ru_translator(message.text)
-            message.text = f'TRANSLATION: {translation[0]['translation_text']} ORIGINAL: {message.text} SOURCE: {source}'
+        print('translating russian language messages')
+        translation_failures = 0
+        for i in range(len(ru_messages)):
+            try:
+                translation = ru_translator(ru_messages[i].text)
+                print(f'translated {i+1} / {len(ru_messages)}')
+                ru_messages[i].text = f'TRANSLATION: {translation[0]['translation_text']} ORIGINAL: {ru_messages[i].text} SOURCE: {source}'
+            except Exception as e:
+                print(e)
+                translation_failures += 1
 
-        messages.append(ru_messages)
+        print(f'{translation_failures} messages failed to translate')
+
+        messages += ru_messages
         
         num_messages = len(messages)
 
