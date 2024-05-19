@@ -66,6 +66,7 @@ async def main():
                 errors.append(f'Failed to get messages from {source}')
 
         # translate russian messages
+        
         print('translating russian language messages')
         translation_failures = 0
         for i in range(len(ru_messages)):
