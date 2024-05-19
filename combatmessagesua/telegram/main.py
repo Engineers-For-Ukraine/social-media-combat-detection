@@ -70,9 +70,9 @@ async def main():
         translation_failures = 0
         for i in range(len(ru_messages)):
             try:
-                translation = ru_translator(ru_messages[i].text)
+                translation = ru_translator(ru_messages[i].text)[0]['translation_text']
                 print(f'translated {i+1} / {len(ru_messages)}')
-                ru_messages[i].text = f'TRANSLATION: {translation[0]['translation_text']} ORIGINAL: {ru_messages[i].text} SOURCE: {source}'
+                ru_messages[i].text = f'TRANSLATION: {translation} ORIGINAL: {ru_messages[i].text} SOURCE: {source}'
             except Exception as e:
                 print(e)
                 translation_failures += 1
