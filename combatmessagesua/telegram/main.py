@@ -14,6 +14,7 @@ async def main():
     classifier = XGBClassifier(model_path='models/xgb_classifier', vectorizer_path='models/tfid-vectorizer.pickle')
     telebot = Telebot()
     mapper = Mapper(client="mongodb://mongo:27017/", db_name="my-db", collection_name="messages")
+    sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report'] # add additional sources here
 
     while True:
 
@@ -24,8 +25,6 @@ async def main():
         mapped = 0      
 
         current_time = datetime.now()
-
-        sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report'] # add additional sources here
 
         print(f'Running at {current_time}')  
 
@@ -41,7 +40,9 @@ async def main():
     
     
         if num_messages > 0:
+
             try:
+                
                 # classify messages
                 print('Classifying messages...')
                 # classifier should always take in and return complete messages not just message.text
