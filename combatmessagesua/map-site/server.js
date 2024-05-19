@@ -29,7 +29,7 @@ app.get('/getDocuments', async (req, res) => {
     const db = client.db(dbName);
     const collection = db.collection(colName);
 
-    const numDaysAgo = 3; // adjust this date to change time window
+    const numDaysAgo = 1; // adjust this date to change time window
 
     const myDate = new Date(new Date() - numDaysAgo * 24 * 60 * 60 * 1000); // Date object for days ago
     const documents = await collection.find({
