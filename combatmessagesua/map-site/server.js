@@ -9,19 +9,27 @@ const { MongoClient } = require('mongodb');
 // Connection info
 const uri = 'mongodb://mongo:27017';
 const dbName = 'my-db';
-
 const colName = 'messages';
 
-const client = new MongoClient(uri);
+let db, collection;
 
-// Connect the client to the server
-client.connect();
-console.log('Connected successfully to MongoDB');
+// Connect the client to the server and store the connection
+async function connectToDatabase() {
+  try {
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    await client.connect();
+    console.log('Connected successfully to MongoDB');
 
-// Connect to the specific database and collection
-const db = client.db(dbName);
-const collection = db.collection(colName);
+    db = client.db(dbName);
+    collection = db.collection(colName);
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    process.exit(1); // Exit the process if the connection fails
+  }
+}
 
+// Call the function to connect to the database
+connectToDatabase();
 
 app.get('/getDocuments', async (req, res) => {
   try {
@@ -50,10 +58,7 @@ app.get('/getDocuments', async (req, res) => {
       console.error('Error connecting to MongoDB:', error);
       res.status(500).send('Internal Server Error');
 
-  } finally {
-      await client.close();
   }
-
 });
 
 app.listen(3000, () => {    console.log('listening on 3000')  });
