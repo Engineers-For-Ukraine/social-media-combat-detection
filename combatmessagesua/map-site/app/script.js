@@ -44,7 +44,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 var layerControl = L.control.layers().addTo(map)
 
-var oneDay = L.layerGroup(getDocuments(1));
+var oneDay = L.layerGroup(getDocuments(1)).addTo(map);
 layerControl.addBaseLayer(oneDay, "past 24 hours");
 
 var threeDays = L.layerGroup(getDocuments(3));
