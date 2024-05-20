@@ -44,17 +44,17 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 var layerControl = L.control.layers().addTo(map)
 
-var oneDay = getDocuments(1);
+var oneDay = L.layerGroup(getDocuments(1));
 layerControl.addBaseLayer(oneDay, "past 24 hours");
 
-var threeDays = getDocuments(3);
+var threeDays = L.layerGroup(getDocuments(3));
 layerControl.addBaseLayer(threeDays, "past 3 days");
 
-var sevenDays = getDocuments(7);
+var sevenDays = L.layerGroup(getDocuments(7));
 layerControl.addBaseLayer(sevenDays, "past week");
 
-var thirtyDays = getDocuments(30);
+var thirtyDays = L.layerGroup(getDocuments(30));
 layerControl.addBaseLayer(thirtyDays, "past month");
 
-var allMessages = getDocuments();
+var allMessages = L.layerGroup(getDocuments());
 layerControl.addBaseLayer(allMessages, "all time");
