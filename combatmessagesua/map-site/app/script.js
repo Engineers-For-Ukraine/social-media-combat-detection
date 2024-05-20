@@ -57,4 +57,4 @@ var thirtyDays = getDocuments(30);
 layerControl.addBaseLayer(thirtyDays, "past month");
 
 var allMessages = getDocuments();
-layerControl.addBaseLayer(allMessags, "all time");
+layerControl.addBaseLayer(allMessages, "all time");
