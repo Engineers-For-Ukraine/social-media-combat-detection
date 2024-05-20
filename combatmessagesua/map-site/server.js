@@ -29,19 +29,30 @@ app.get('/getDocuments', async (req, res) => {
     const db = client.db(dbName);
     const collection = db.collection(colName);
 
-    const numDaysAgo = 1; // adjust this date to change time window
+    const numDaysAgo = parseInt(req.query.numDaysAgo) || 0; // Get numDaysAgo from query parameter, default to 1 if not provided
 
-    const myDate = new Date(new Date() - numDaysAgo * 24 * 60 * 60 * 1000); // Date object for days ago
-    const documents = await collection.find({
-      datetime: { $gte: myDate } // Filter documents dated within the past week
-    }).toArray();
+    let query = {};
+
+    if (!isNaN(numDaysAgo) && numDaysAgo > 0) {
+      
+      const myDate = new Date(new Date() - numDaysAgo * 24 * 60 * 60 * 1000); // Date object for days ago
+
+      query = {datetime: { $gte: myDate } }// Filter documents by date
+
+    }
+    
+    const documents = await collection.find({query}).toArray();
+    
     res.json(documents);
+
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    res.status(500).send('Internal Server Error');
+      console.error('Error connecting to MongoDB:', error);
+      res.status(500).send('Internal Server Error');
+
   } finally {
-    await client.close();
+      await client.close();
   }
+
 });
 
 app.listen(3000, () => {    console.log('listening on 3000')  });
