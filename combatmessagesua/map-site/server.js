@@ -14,6 +14,15 @@ const colName = 'messages';
 
 const client = new MongoClient(uri);
 
+// Connect the client to the server
+client.connect();
+console.log('Connected successfully to MongoDB');
+
+// Connect to the specific database and collection
+const db = client.db(dbName);
+const collection = db.collection(colName);
+
+
 app.get('/getDocuments', async (req, res) => {
   try {
 
