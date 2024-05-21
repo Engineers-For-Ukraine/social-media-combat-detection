@@ -57,10 +57,12 @@ L.control.layers(overlays,null,{collapsed:false}).addTo(map);
 // fill layers with messages
 
 // create 'loading...' marker
-var loading_marker =  L.marker([48, 35]).bindPopup('loading...').openPopup().addTo(map)
-getDocuments(1, oneDay)
+var day_loading_popup =  L.popup().setLatLng([48, 35]).setContent('loading...').openOn(oneDay);
 oneDay.addTo(map)
-map.removeLayer(loading_marker)
+getDocuments(1, oneDay).then(() => oneDay.removeLayer(day_loading_popup));
 
-getDocuments(7, sevenDays)
-getDocuments(30, thirtyDays)
+var week_loading_popup =  L.popup().setLatLng([48, 35]).setContent('loading...').openOn(sevenDays);
+getDocuments(7, sevenDays).then(() => sevenDays.removeLayer(week_loading_popup));
+
+var month_loading_popup =  L.popup().setLatLng([48, 35]).setContent('loading...').openOn(thirtyDays);
+getDocuments(30, thirtyDays).then(() => thirtyDays.removeLayer(month_loading_popup));
