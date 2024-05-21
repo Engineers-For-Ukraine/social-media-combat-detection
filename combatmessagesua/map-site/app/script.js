@@ -1,6 +1,6 @@
 // function get messages from database
 
-async function getDocuments(numDaysAgo) {
+async function getDocuments(numDaysAgo, layerGroup) {
 
   // get the docs from the database and make them readable
 
@@ -25,11 +25,9 @@ async function getDocuments(numDaysAgo) {
 
     }); // this automatically opens whichever marker is opened last
 
-    markers.append(marker);
+    marker.addTo(layerGroup);
 
   });
-
-  return markers;
 
 }
 
@@ -44,17 +42,28 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 var layerControl = L.control.layers().addTo(map)
 
-var oneDay = L.layerGroup(getDocuments(1)).addTo(map);
+var oneDay = L.layerGroup().addTo(map);
+getDocuments(1, oneDay)
 layerControl.addBaseLayer(oneDay, "past 24 hours");
 
-var threeDays = L.layerGroup(getDocuments(3));
+var threeDays = L.layerGroup().addTo(map);
+getDocuments(3, threeDays)
 layerControl.addBaseLayer(threeDays, "past 3 days");
 
-var sevenDays = L.layerGroup(getDocuments(7));
+var sevenDays = L.layerGroup().addTo(map);
+getDocuments(7, sevenDays)
 layerControl.addBaseLayer(sevenDays, "past week");
 
-var thirtyDays = L.layerGroup(getDocuments(30));
+var thirtyDays = L.layerGroup().addTo(map);
+getDocuments(30, thirtyDays)
 layerControl.addBaseLayer(thirtyDays, "past month");
 
-var allMessages = L.layerGroup(getDocuments());
+var threesixtyfiveDays = L.layerGroup().addTo(map);
+getDocuments(365, threesixtyfiveDays)
+layerControl.addBaseLayer(threesixtyfiveDays, "past year");
+
+var allMessages = L.layerGroup().addTo(map);
+getDocuments(0, allMessages)
 layerControl.addBaseLayer(allMessages, "all time");
+
+oneDay.addTo(map)

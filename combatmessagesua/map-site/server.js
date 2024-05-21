@@ -11,32 +11,28 @@ const uri = 'mongodb://mongo:27017';
 const dbName = 'my-db';
 const colName = 'messages';
 
-let db, collection;
-
-// Connect the client to the server and store the connection
 async function connectToDatabase() {
   try {
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    client = new MongoClient(uri);
     await client.connect();
-    console.log('Connected successfully to MongoDB');
+    console.log('Connected to MongoDB');
 
     db = client.db(dbName);
+    console.log('Found my-db');
+
     collection = db.collection(colName);
+    console.log('Found messages');
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    process.exit(1); // Exit the process if the connection fails
+    process.exit(1);
   }
 }
 
-// Call the function to connect to the database
-connectToDatabase();
+connectToDatabase().then(() => {
+  app.listen(3000, () => {    console.log('listening on 3000')  });
+})
 
 app.get('/getDocuments', async (req, res) => {
   try {
-
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection(colName);
 
     const numDaysAgo = parseInt(req.query.numDaysAgo) || 0; // Get numDaysAgo from query parameter, default to 1 if not provided
 
@@ -49,10 +45,13 @@ app.get('/getDocuments', async (req, res) => {
       query = {datetime: { $gte: myDate } }// Filter documents by date
 
     }
+
+    console.log(query)
     
     const documents = await collection.find(query).toArray();
     
     res.json(documents);
+
 
   } catch (error) {
       console.error('Error connecting to MongoDB:', error);
@@ -61,7 +60,6 @@ app.get('/getDocuments', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {    console.log('listening on 3000')  });
 
 app.get('/cmua', (req, res) => {  res.sendFile(__dirname + '/app/assets/cmua.png')});
 
