@@ -55,8 +55,12 @@ var overlays = {
 L.control.layers(overlays,null,{collapsed:false}).addTo(map);
 
 // fill layers with messages
+
+// create 'loading...' marker
+var loading_marker =  L.marker([48, 35]).bindPopup('loading...').openPopup().addTo(map)
 getDocuments(1, oneDay)
 oneDay.addTo(map)
+map.removeLayer(loading_marker)
 
 getDocuments(7, sevenDays)
 getDocuments(30, thirtyDays)
