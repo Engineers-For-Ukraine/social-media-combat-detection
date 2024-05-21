@@ -40,30 +40,23 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-var layerControl = L.control.layers().addTo(map)
+// add layers to map for filtering by date
 
-var oneDay = L.layerGroup().addTo(map);
+var oneDay = L.layerGroup();
+var sevenDays = L.layerGroup();
+var thirtyDays = L.layerGroup();
+
+var overlays = {
+  "past day": oneDay,
+  "past week": sevenDays,
+  "past month": thirtyDays,
+          };
+
+L.control.layers(overlays,null,{collapsed:false}).addTo(map);
+
+// fill layers with messages
 getDocuments(1, oneDay)
-layerControl.addBaseLayer(oneDay, "past 24 hours");
-
-var threeDays = L.layerGroup().addTo(map);
-getDocuments(3, threeDays)
-layerControl.addBaseLayer(threeDays, "past 3 days");
-
-var sevenDays = L.layerGroup().addTo(map);
-getDocuments(7, sevenDays)
-layerControl.addBaseLayer(sevenDays, "past week");
-
-var thirtyDays = L.layerGroup().addTo(map);
-getDocuments(30, thirtyDays)
-layerControl.addBaseLayer(thirtyDays, "past month");
-
-var threesixtyfiveDays = L.layerGroup().addTo(map);
-getDocuments(365, threesixtyfiveDays)
-layerControl.addBaseLayer(threesixtyfiveDays, "past year");
-
-var allMessages = L.layerGroup().addTo(map);
-getDocuments(0, allMessages)
-layerControl.addBaseLayer(allMessages, "all time");
-
 oneDay.addTo(map)
+
+getDocuments(7, sevenDays)
+getDocuments(30, thirtyDays)
