@@ -20,8 +20,8 @@ async def main():
     print('telebot initialized')
     mapper = Mapper(client="mongodb://mongo:27017/", db_name="my-db", collection_name="messages")
     print('databases connnected')
-    ru_translator = pipeline("translation_ru_to_en", model="Helsinki-NLP/opus-mt-ru-en")
-    print('translator loaded')
+    """ ru_translator = pipeline("translation_ru_to_en", model="Helsinki-NLP/opus-mt-ru-en")
+    print('translator loaded') """
 
     sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report'] # add additional sources here
     ru_sources = ['astrapress']
@@ -54,7 +54,7 @@ async def main():
     
         # get messages from russian language sources
 
-        for source in ru_sources:
+        """ for source in ru_sources:
             try:
                 new_messages = await telebot.get_messages(source)
                 ru_messages += new_messages
@@ -63,7 +63,7 @@ async def main():
             except Exception as e:
                 print('Failed to get messages')
                 print(e)
-                errors.append(f'Failed to get messages from {source}')
+                errors.append(f'Failed to get messages from {source}') """
 
         # translate russian messages
         
