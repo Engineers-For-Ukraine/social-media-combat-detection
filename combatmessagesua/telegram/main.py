@@ -52,9 +52,9 @@ async def main():
                 errors.append(f'Failed to get messages from {source}')
     
     
-        # get messages from russian language sources
+        """ # get messages from russian language sources
 
-        """ for source in ru_sources:
+        for source in ru_sources:
             try:
                 new_messages = await telebot.get_messages(source)
                 ru_messages += new_messages
@@ -63,7 +63,7 @@ async def main():
             except Exception as e:
                 print('Failed to get messages')
                 print(e)
-                errors.append(f'Failed to get messages from {source}') """
+                errors.append(f'Failed to get messages from {source}')
 
         # translate russian messages
         
@@ -80,7 +80,7 @@ async def main():
 
         print(f'{translation_failures} messages failed to translate')
 
-        messages += ru_messages
+        messages += ru_messages """
         
         num_messages = len(messages)
 
