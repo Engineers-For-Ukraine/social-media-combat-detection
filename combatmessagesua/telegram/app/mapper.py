@@ -12,6 +12,7 @@ class Mapper:
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]
 
+
     # this method takes a set of messages
     # it processes those messages
     # then adds them to the mongo db
@@ -20,6 +21,7 @@ class Mapper:
         self.collection.insert_many(rows)
         return len(rows)
 
+
     # this helper function that loops over messages and processes them
     def make_rows_for_db(self, messages):
         rows = []
@@ -27,7 +29,8 @@ class Mapper:
             message_rows = self.process_message(message)
             rows += message_rows
         return rows
-    
+
+
     # this function extracts locations from each messages then
     # formats each message for insertion to the mongodb
     def process_message(self, message):
@@ -58,7 +61,11 @@ class Mapper:
             if best_match[1] >= MINIMUM_SIMILARITY:
                 # append [best_match, coords] as list to coord_list
                 coord_list.append([best_match, coord_dict[best_match[0]]])
+
+        coord_list = list(set(coord_list)) # remove duplicates
+        
         return coord_list
+
 
     # this is a helper function for get_locations that 
     # gets all the capitalized words from a string and returns them
@@ -68,6 +75,8 @@ class Mapper:
         
         # Use re.findall to find all matches in the input string
         capitalized_words = re.findall(pattern, input_string)
+
+        capitalized_words = list(set(capitalized_words)) # remove duplicates
         
         return capitalized_words
     

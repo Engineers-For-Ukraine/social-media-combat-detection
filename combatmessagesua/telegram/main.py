@@ -23,7 +23,7 @@ async def main():
     """ ru_translator = pipeline("translation_ru_to_en", model="Helsinki-NLP/opus-mt-ru-en")
     print('translator loaded') """
 
-    sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report'] # add additional sources here
+    sources = ['amplifyukraine', 'intelslavaua', 'Kyivpost_official', 'Ukraine_Report', 'telehunt_watch'] # add additional sources here
     ru_sources = ['astrapress']
 
     while True:

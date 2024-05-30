@@ -45,8 +45,6 @@ app.get('/getDocuments', async (req, res) => {
       query = {datetime: { $gte: myDate } }// Filter documents by date
 
     }
-
-    console.log(query)
     
     const documents = await collection.find(query).toArray();
     
