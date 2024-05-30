@@ -61,9 +61,7 @@ class Mapper:
             if best_match[1] >= MINIMUM_SIMILARITY:
                 # append [best_match, coords] as list to coord_list
                 coord_list.append([best_match, coord_dict[best_match[0]]])
-
-        coord_list = list(set(coord_list)) # remove duplicates
-        
+                        
         return coord_list
 
 
