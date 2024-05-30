@@ -5,3 +5,4 @@ telegram/app/api.py
 telegram/this.session
 /models
 /annotation-site/node_modules
+combatmessagesua/test-map
