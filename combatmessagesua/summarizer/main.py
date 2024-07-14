@@ -9,12 +9,12 @@ async def main():
 
     sleep_time = 24 * 60 * 60
 
-    SUMMARY_CHANNEL = -1002016594072
+    SUMMARY_CHANNEL = 'CombatMessagesUADailySummaries'
     REPORT_CHANNEL = -1002008284745
 
     while True:
 
-        print('Running at ' + datetime.now())
+        print('Running at ' + str(datetime.now()))
 
         tic = perf_counter()
 
