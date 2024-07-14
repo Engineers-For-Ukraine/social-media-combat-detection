@@ -11,8 +11,8 @@ async def get_messages(chat_name):
                 messages.append(message)
     return messages
 
-async def post_message(message):
+async def post_message(message, channel):
     global api_id
     global api_hash
     async with TelegramClient(api_id=api_id, api_hash=api_hash, session='this') as client:
-        await client.send_message(entity=-1002016594072, message=message)
+        await client.send_message(entity=channel, message=message)

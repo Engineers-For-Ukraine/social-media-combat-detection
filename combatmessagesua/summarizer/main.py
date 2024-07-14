@@ -9,25 +9,43 @@ async def main():
 
     sleep_time = 24 * 60 * 60
 
+    SUMMARY_CHANNEL = -1002016594072
+    REPORT_CHANNEL = -1002008284745
+
     while True:
 
         print('Running at ' + datetime.now())
 
         tic = perf_counter()
 
-        messages = await get_messages('CombatMessagesUA')
+        try:
 
-        print('Summarizing...')
+            messages = await get_messages('CombatMessagesUA')
 
-        summary = create_summary(messages)
+            print('Summarizing...')
 
-        await post_message(summary)
+            summary = create_summary(messages)
+
+            await post_message(summary, SUMMARY_CHANNEL)
+
+            await post_message(('Daily summary posted at ' + str(datetime.now())), REPORT_CHANNEL)
+
+        except Exception as e:
+
+            try:
+
+                await post_message(f'Daily summary failed because {e}', REPORT_CHANNEL)
+
+            except Exception as e2:
+
+                print(f'Process failed because {e} \nFailed to post report because {e2}')
+
+
+        print('Going to sleep for 24 hours.')
 
         toc = perf_counter()
 
         elapsed = toc - tic
-
-        print('Finished. Going to sleep for 24 hours.')
 
         sleep(sleep_time - elapsed)
 

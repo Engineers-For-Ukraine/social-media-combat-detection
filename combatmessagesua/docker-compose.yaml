@@ -24,3 +24,8 @@ services:
     build: ./telegram
     restart: unless-stopped
     container_name: python-app
+
+  summarizer:
+    build: ./summarizer
+    restart: unless-stopped
+    container_name: summarizer
